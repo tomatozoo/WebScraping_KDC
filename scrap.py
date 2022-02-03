@@ -79,6 +79,12 @@ def crawler_D1(keys):
 if __name__ == '__main__':
     driver = webdriver.Chrome(executable_path=selen_path,
                               chrome_options=chrome_opt)
-    
-    for i in ['TED처럼 말하라 : 세계 최고 프레젠테이션의 25가지 비밀','마음의 작동법 : 무엇이 당신을 움직이는가','일의 미래 : 10년 후, 나는 어디서 누구와 어떤 일을 하고 있을까','마음의 사회학','권력이동','사회적 자본과 민주주의: 이탈리아의 지방자치와 시민적 전통','사회주의 재발명','살라미나의 병사들 : 하비에르 세르카스 장편소설','미국의 송어낚시']:
+    result = pd.DataFrame(columns=['도서명', '저자', '출판사','출판년도','청구기호'])
+    df = pd.read_excel('2018 교육학과 도서목록 정리 통합본(1130).xlsx', sheet_name='단순통합')
+    df = df['도서명']
+    for i in df:
+        print(i)
+        i = i.split(':')[0]
+        i = i.split('(')[0]
+        i = i.split('[')[0]
         RS1 = crawler_D1(i)
