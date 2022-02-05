@@ -40,7 +40,6 @@ elif 'win32' in platform:
 
 # main crawler 
 def crawler_D1(keys):
-    print(keys)
     try:
         # firefox
         Result = {}
@@ -61,17 +60,17 @@ def crawler_D1(keys):
         
         # 정보 추출
         author = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="sub_content"]/div[1]/div/div[1]/div[3]/div/div/div[3]/div[2]/div[1]/div[2]/div[3]/span[4]')))
-        print(author.text)
         
         company = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="sub_content"]/div[1]/div/div[1]/div[3]/div/div/div[3]/div[2]/div[1]/div[2]/div[3]/span[5]')))
-        print(company.text) 
         
         year = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="sub_content"]/div[1]/div/div[1]/div[3]/div/div/div[3]/div[2]/div[1]/div[2]/div[3]/span[6]')))
-        print(year.text) 
         
         sname = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="sub_content"]/div[1]/div/div[1]/div[3]/div/div/div[3]/div[2]/div[1]/div[2]/div[3]/span[8]')))
         sname = sname.split(':')[1]
-        print(sname.text)     
+        
+        return [keys, author.text, company.text, year.text, sname.text]
+        
+        # //*[@id="divSeoji"]/div[1]/p[7]/a[2]
     except:
         pass
 
@@ -83,8 +82,12 @@ if __name__ == '__main__':
     df = pd.read_excel('2018 교육학과 도서목록 정리 통합본(1130).xlsx', sheet_name='단순통합')
     df = df['도서명']
     for i in df:
+    
         print(i)
         i = i.split(':')[0]
         i = i.split('(')[0]
         i = i.split('[')[0]
         RS1 = crawler_D1(i)
+        result.append(RS1)
+        
+    df.to_excel('초안.xlsx')
